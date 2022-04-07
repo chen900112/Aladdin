@@ -1,10 +1,14 @@
 import { useRef, useEffect } from 'react';
-import styles from './styles.less';
+import { Button } from 'antd';
 import AA from './components/AA';
+import { PatternRect } from "../../components/VisComps"
 
+import styles from './styles.less';
+
+console.log("PatternRect", PatternRect);
 const Workbench =()=>{
     const AARef = useRef(null);
-    console.log(AARef);
+    console.log("AARef",AARef);
     useEffect(()=>{
         console.log(AARef);
       
@@ -15,7 +19,7 @@ const Workbench =()=>{
     }
     return <div className={styles.Workbench}>
         <div className={styles.topBar} >topBar</div>
-        <button onClick={changeCount}>改变</button>
+        <Button onClick={changeCount}>改变</Button>
                 <AA ref={AARef}></AA>
             </div>
 }

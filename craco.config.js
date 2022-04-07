@@ -10,11 +10,11 @@ module.exports = {
             javascriptEnabled: true,
           },
         },
-        cssLoaderOptions: {
-          modules: {
-            localIdentName: "[local]_[hash:base64:5]",
-          },
-        },
+        // cssLoaderOptions: {
+        //   modules: {
+        //     localIdentName: "[local]_[hash:base64:5]",
+        //   },
+        // },
       },
     },
   ],
