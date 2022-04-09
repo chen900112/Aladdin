@@ -3,10 +3,9 @@ import styles from './styles.less';
 
 
 const ScrollPanel = (props, ref) => {
-    const [state, setState]= useState({
-        width:100,
-        height:100
-    })
+   
+    const [width, setWidth] = useState(props.defaultWidth)
+
 
     useEffect(()=>{
         // setTimeout(() => {
@@ -21,8 +20,7 @@ const ScrollPanel = (props, ref) => {
 
     return <div 
                 style={{
-                    width:state.width, 
-                    height:state.height
+                    width: width, 
                 }} 
                 className={styles.scrollPanel}
             >

@@ -1,4 +1,4 @@
-import BasicsLayout from "../Layout/BasicsLayout";
+import BasicsLayout from "../../layouts/BasicsLayout";
 import Workbench from "../../containers/Workbench";
 
 const routes = [

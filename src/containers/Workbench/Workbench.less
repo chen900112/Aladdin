@@ -1,13 +1,16 @@
 @import '../../theme.less';
 .workbench {
-    .topPanel{
+    height: 100vh;
+    
+    .haderPanel{
         height: 36px;
         // border: 1px solid rgb(223, 223, 223);
         background-color: @main-color;
+        border-bottom:  1px solid @main-border-color;
     }
-    .layerPanel{
-        width: 100px;
-        
+    .bodyPanel{
+        display: flex;
+        height: calc(100vh - 64px);
     }
     
 }
