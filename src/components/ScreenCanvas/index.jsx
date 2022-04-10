@@ -8,8 +8,7 @@ const ScreenCanvas = (props, ref) => {
            
         }
     }))
-    return <div >
-        ScreenCanvas
+    return <div>
         {props.children}
     </div>
 }

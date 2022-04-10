@@ -13,7 +13,7 @@ import OperatorPanel from "./components/OperatorPanel"
 import styles from './Workbench.less';
 import { Button } from 'antd';
 const Workbench =()=>{
-    const [ list, setList ] = useState([{key:"a"},{key:"b"}]);
+    const [list, setList] = useState([{ key: "a", width: 100, height: 100 }, { key: "b", width: 100, height: 100 }]);
 
     useEffect(()=>{
        
@@ -25,16 +25,14 @@ const Workbench =()=>{
                 <ScrollPanel defaultWidth={100}>
                     <VisLayer />
                 </ScrollPanel>
-                <ScrollPanel defaultWidth={300} >
+                <ScrollPanel defaultWidth={100} >
                     <VisLibrary />
                  </ScrollPanel>
-                <div style={{flex:1}}>
-                    <ViewportCanvas>
-                        {/* 安装场景模拟器 */}
-                        <ScreenSimulator comp={ScreenCanvas}>
-                            {list.map((d) => <VisCompSimulator key={d.key} comp={VisWrapper} />)}
-                        </ScreenSimulator>
-                    </ViewportCanvas>
+                <div style={{flex:1,display:'flex'}}>
+                    {/* 安装场景模拟器 */}
+                    <ScreenSimulator comp={ScreenCanvas}>
+                        {list.map((d) => <VisCompSimulator key={d.key} comp={VisWrapper} config={d} />)}
+                    </ScreenSimulator>
                 </div>
 
                 <ScrollPanel defaultWidth={300} >

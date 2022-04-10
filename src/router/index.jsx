@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch, Route } from "react-router-dom";
-import routerConfig from './routerConfig';
+import routerConfig from '../config/routerConfig';
 const renderRouterComponent = function (routerConfig,path='') {
   return  <Switch >{routerConfig.map((rc) => {
             const rcPath = (/^\/.?/.test(rc.path) ? `${rc.path}`: `${path}${rc.path}`).toLocaleLowerCase();
