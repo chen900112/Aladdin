@@ -1,36 +1,31 @@
 // 场景模拟器
 import { useRef, useState, useEffect, forwardRef, useImperativeHandle } from 'react';
 // import Ruler from "@scena/ruler";
-import Ruler from "@scena/react-ruler";
-import Guides from "@scena/react-guides";
+// import Ruler from "@scena/react-ruler";
+// import Guides from "@scena/react-guides";
+import Ruler from "../../../../components/Ruler";
 import Dragger from "@daybrush/drag";
+import { Button } from 'antd';
 import styles from './ScreenSimulator.less';
+
+// 20% = 0.2
+
+// 100%  =  scale:1
+// |8|8|
+// 200% = scale:2
 const ScreenSimulator = (props, ref) => {
     const { comp: Comp, children } = props
     const compRef = useRef(null);
 
-    const rulerRef = useRef(null)
-    const hRulerRef = useRef(null);
-    const vRulerRef = useRef(null);
-    
-
-    const hGuidesRef = useRef(null);
-    const vGuidesRef = useRef(null);
-
+    const maskRef = useRef(null)
+    const [screenSize, setScreenSize] = useState({
+        width:2000,
+        height:1000
+    })
+    const [screenScale, setScreenScale] = useState(0.2)
     const [scroll, setScroll] = useState({x:0,y:0});
-    // const [scale, setScale] = useState(0.2);
-  
-
-    // const hRulerInst = useRef(null)
-    // const vRulerInst = useRef(null)
     
     useEffect(()=>{
-
-        window.addEventListener("resize", () => {
-            hRulerRef.current.resize();
-            vRulerRef.current.resize();
-        });
-
         window.addEventListener("wheel", e => {
             setScroll(state => {
                 return {
@@ -38,11 +33,9 @@ const ScreenSimulator = (props, ref) => {
                     y: scroll.y -= e.deltaY
                 }
             })
-
-            // guides.scrollGuides(scrollY);
-            // guides.scroll(scrollX);
         });
-        new Dragger(rulerRef.current, {
+
+        new Dragger(maskRef.current, {
             drag: e => {
                 setScroll(state => {
                     return {
@@ -57,71 +50,39 @@ const ScreenSimulator = (props, ref) => {
       
     },[])
 
-    useEffect(()=>{
-        console.log("hRulerInst.current", hRulerRef.current);
-        hRulerRef.current.scroll(scroll.x);
-        vRulerRef.current.scroll(scroll.y);
-    }, [scroll])
+    const zoomA = ()=>{
+        setScreenScale((state)=>  {
+            return state + 0.02
+        })
+    }
 
-    // console.log("config", props);
-    return <div className={styles.screenSimulator}>
-            <div className={styles.ruler} ref={rulerRef}></div>
-            <div className={styles.hRuler} >
-                {/* <Ruler
-                    type="horizontal"
-                    ref={e => hRulerRef.current = e}
-                    backgroundColor="#181a24"
-                // zoom={10}
-                ></Ruler> */}
+    const zoomB = () => {
+        setScreenScale((state) => {
+            return state - 0.02
+        })
 
-                <Guides
-                    ref={e => hRulerRef.current = e}
-                    type="horizontal"
-                    backgroundColor="#181a24"
-                    style={{ height: 30 }}
-                range={[-10000, 10000]}
-                    onChangeGuides={({ guides }) => {
-                        console.log("horizontal", guides);
-                    }}
-                />
-            </div>
-            <div className={styles.vRuler} >
-                {/* <Ruler
-                    type='vertical'
-                    ref={e => vRulerRef.current = e}
-                    backgroundColor="#181a24"
-              
-                ></Ruler> */}
-
-            <Guides
-                ref={e => vRulerRef.current = e}
-                type="vertical"
-                backgroundColor="#181a24"
-                style={{ width: 30 }}
-                range={[-10000, 10000]}
-                onChangeGuides={({ guides }) => {
-                    console.log("vertical", guides);
-                }}
-            />
-            </div>
         
-          
-       
+    }
+    return <div className={styles.screenSimulator}>
+            <div className={styles.simulator}>
+            <Ruler scale={screenScale} startX={scroll.x} startY={scroll.y}></Ruler>
+            <div className={styles.mask} ref={maskRef} range={[-10000, 10000]}></div>
+                <div className={styles.viewport} >
+                    <div className={styles.viewportInner}>
+                        <div className={styles.screenWrapper} style={{ transformOrigin: "0 0", transform: `scale(${screenScale}) translate(${-1 * scroll.x}px, ${-1 *scroll.y}px)`, width: screenSize.width, height: screenSize.height }}>
+                            {/* Comp: ScreenCanvas */}
+                            <Comp ref={compRef} >
+                                {children}
+                            </Comp>
 
-        <div className={styles.viewport} >
-            <div className={styles.viewportInner} style={{ transform: `translate(${-scroll.x}px, ${-scroll.y}px)` }}>
-                <div className={styles.screenWrapper} /* style={{ width: 1920, height: 1080 }} */>
-                    {/* Comp: ScreenCanvas */}
-                    <Comp ref={compRef} >
-                        {children}
-                    </Comp>
-
+                        </div>
+                    </div>
                 </div>
             </div>
-            
-        </div>
-       
-       
+            <div className={styles.bar}>
+                <Button size='mini' onClick={zoomA}>放大</Button>
+            <Button size='small' onClick={zoomB}>缩小</Button>
+            </div>
     </div>
 }
 export default forwardRef(ScreenSimulator)

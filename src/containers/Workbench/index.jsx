@@ -29,8 +29,7 @@ const Workbench =()=>{
                     <VisLibrary />
                  </ScrollPanel>
                 <div style={{flex:1,display:'flex'}}>
-                    {/* 安装场景模拟器 */}
-                    <ScreenSimulator comp={ScreenCanvas}>
+                    <ScreenSimulator comp={ScreenCanvas} >
                         {list.map((d) => <VisCompSimulator key={d.key} comp={VisWrapper} config={d} />)}
                     </ScreenSimulator>
                 </div>

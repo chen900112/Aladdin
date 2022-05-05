@@ -1,27 +1,20 @@
+@import '../../../../theme.less';
 .screenSimulator{
     width: 100%;
     height: 100%;
     position: relative;
-  
     flex: 1;
-    .hRuler {
-        position: absolute;
-        left: 30px;
-        top: 0;
-        width: calc(100% - 30px);
-        height: 30px;
-        z-index: 2;
-    }
-
-    .vRuler {
-        position: absolute;
-        top: 30px;
-        left: 0;
-        width: 30px;
+    .simulator{
         height: calc(100% - 30px);
-        z-index: 2;
+        overflow: hidden;
+        position: relative;
+    }   
+    .bar{
+        height: 30px;
+        background-color: @main-color;
     }
-    .ruler{
+ 
+    .mask {
         width: 100%;
         height: 100%;
         padding-top: 30px;
@@ -30,8 +23,8 @@
         z-index: 1;
         font-size: 12px;
         overflow: hidden;
-        display: none;
-       
+        // display: none;
+    
     }
    
     .viewport{
@@ -49,13 +42,14 @@
         width: 20000px;
         height: 20000px;
         position: absolute;
-        left: -10000px;
-        top: -10000px;
     }
     .screenWrapper {
        position: absolute;
-      
+        background-color: rgb(19, 35, 100);
     }
     
+    .bar{
+        height: 30px;
+    }
   
 }
